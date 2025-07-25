@@ -50,6 +50,8 @@ async function performSearch(query) {
     try {
         showLoading();
         
+        console.log('Searching for:', query);
+        
         // Search for sub communities that match the query
         const { data, error } = await supabase
             .from('sub_communities')
@@ -58,18 +60,21 @@ async function performSearch(query) {
             .limit(10)
             .order('sub_communities');
         
+        console.log('Supabase response:', { data, error });
+        
         if (error) {
             console.error('Search error:', error);
-            showError('Error searching sub communities');
+            showError(`Error: ${error.message}`);
             return;
         }
         
         currentResults = data || [];
+        console.log('Current results:', currentResults);
         displayResults(query);
         
     } catch (error) {
         console.error('Search failed:', error);
-        showError('Failed to search sub communities');
+        showError(`Failed to search: ${error.message}`);
     }
 }
 
@@ -195,8 +200,36 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
+// Test Supabase connection
+async function testConnection() {
+    try {
+        console.log('Testing Supabase connection...');
+        const { data, error } = await supabase
+            .from('sub_communities')
+            .select('count')
+            .limit(1);
+        
+        if (error) {
+            console.error('Connection test failed:', error);
+            return false;
+        }
+        
+        console.log('Connection test successful');
+        return true;
+    } catch (error) {
+        console.error('Connection test error:', error);
+        return false;
+    }
+}
+
 // Initialize the app
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    // Test connection first
+    const isConnected = await testConnection();
+    if (!isConnected) {
+        console.error('Failed to connect to Supabase');
+    }
+    
     // Focus on search input
     searchInput.focus();
 }); 
