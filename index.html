@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sub Communities Lookup</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sub Communities Lookup</h1>
+            <p>Search and select from 2000+ sub communities</p>
+        </header>
+        
+        <main>
+            <div class="search-container">
+                <div class="search-input-wrapper">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Type to search sub communities..."
+                        autocomplete="off"
+                    >
+                    <div class="search-icon">🔍</div>
+                </div>
+                
+                <div id="resultsContainer" class="results-container hidden">
+                    <div id="resultsList" class="results-list">
+                        <!-- Results will be populated here -->
+                    </div>
+                </div>
+            </div>
+            
+            <div id="selectedResult" class="selected-result hidden">
+                <h3>Selected Sub Community:</h3>
+                <div id="selectedContent" class="selected-content">
+                    <!-- Selected item will be displayed here -->
+                </div>
+                <button id="clearSelection" class="clear-btn">Clear Selection</button>
+            </div>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
