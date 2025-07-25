@@ -56,9 +56,9 @@ async function performSearch(query) {
         const { data, error } = await supabase
             .from('sub_communities')
             .select('*')
-            .ilike('sub_communities', `%${query}%`)
+            .ilike('sub_cummunity', `%${query}%`)
             .limit(10)
-            .order('sub_communities');
+            .order('sub_cummunity');
         
         console.log('Supabase response:', { data, error });
         
@@ -93,7 +93,7 @@ function displayResults(query) {
         resultItem.dataset.index = index;
         
         // Highlight the matching part of the text
-        const highlightedText = highlightMatch(item.sub_communities, query);
+        const highlightedText = highlightMatch(item.sub_cummunity, query);
         resultItem.innerHTML = highlightedText;
         
         // Add click event
@@ -127,7 +127,7 @@ function highlightMatch(text, query) {
 // Select an item
 function selectItem(item) {
     selectedItem = item;
-    selectedContent.textContent = item.sub_communities;
+    selectedContent.textContent = item.sub_cummunity;
     
     // Hide search results
     hideResults();
