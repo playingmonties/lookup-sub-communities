@@ -59,6 +59,7 @@ If you want to receive the selected data in n8n:
 
 The webhook will receive a JSON payload with:
 - `sub_community`: The selected sub community name
+- `user_email`: User's email address
 - `selected_at`: ISO timestamp of selection
 - `user_agent`: Browser information
 - `timestamp`: Unix timestamp

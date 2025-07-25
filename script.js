@@ -16,6 +16,7 @@ const selectedResult = document.getElementById('selectedResult');
 const selectedContent = document.getElementById('selectedContent');
 const clearSelectionBtn = document.getElementById('clearSelection');
 const submitSelectionBtn = document.getElementById('submitSelection');
+const userEmailInput = document.getElementById('userEmail');
 
 // State
 let searchTimeout;
@@ -152,6 +153,7 @@ function clearSelection() {
     selectedItem = null;
     selectedResult.classList.add('hidden');
     selectedContent.textContent = '';
+    userEmailInput.value = '';
     searchInput.focus();
 }
 
@@ -159,6 +161,22 @@ function clearSelection() {
 async function submitSelection() {
     if (!selectedItem) {
         alert('Please select a sub community first');
+        return;
+    }
+    
+    // Validate email
+    const email = userEmailInput.value.trim();
+    if (!email) {
+        alert('Please enter your email address');
+        userEmailInput.focus();
+        return;
+    }
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address');
+        userEmailInput.focus();
         return;
     }
     
@@ -175,6 +193,7 @@ async function submitSelection() {
         // Prepare the data to send
         const payload = {
             sub_community: selectedItem.sub_community,
+            user_email: email,
             selected_at: new Date().toISOString(),
             user_agent: navigator.userAgent,
             timestamp: Date.now(),
@@ -199,6 +218,7 @@ async function submitSelection() {
             
             // Clear the selection after successful submission
             clearSelection();
+            userEmailInput.value = '';
         } else {
             throw new Error(`HTTP error! status: ${response.status}`);
         }

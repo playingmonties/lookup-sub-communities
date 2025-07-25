@@ -6,7 +6,7 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #e55f59 0%, #d44a44 100%);
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -27,6 +27,30 @@ body {
 header {
     text-align: center;
     margin-bottom: 40px;
+}
+
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.logo {
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+}
+
+.logo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 header h1 {
@@ -63,9 +87,9 @@ header p {
 
 #searchInput:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #e55f59;
     background: white;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    box-shadow: 0 0 0 3px rgba(229, 95, 89, 0.1);
 }
 
 .search-icon {
@@ -114,7 +138,7 @@ header p {
 }
 
 .result-item.selected {
-    background: #667eea;
+    background: #e55f59;
     color: white;
 }
 
@@ -153,6 +177,42 @@ header p {
     color: #333;
 }
 
+.email-section {
+    margin-bottom: 20px;
+}
+
+.email-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
+}
+
+.email-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.email-input:focus {
+    outline: none;
+    border-color: #e55f59;
+    box-shadow: 0 0 0 3px rgba(229, 95, 89, 0.1);
+}
+
+.email-input:invalid {
+    border-color: #dc3545;
+}
+
+.email-input:valid {
+    border-color: #28a745;
+}
+
 .button-group {
     display: flex;
     gap: 15px;
@@ -160,7 +220,7 @@ header p {
 }
 
 .submit-btn {
-    background: #28a745;
+    background: #e55f59;
     color: white;
     border: none;
     padding: 12px 24px;
@@ -174,9 +234,9 @@ header p {
 }
 
 .submit-btn:hover {
-    background: #218838;
+    background: #d44a44;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+    box-shadow: 0 4px 8px rgba(229, 95, 89, 0.3);
 }
 
 .submit-btn:disabled {
