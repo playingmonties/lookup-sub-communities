@@ -153,6 +153,39 @@ header p {
     color: #333;
 }
 
+.button-group {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.submit-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    flex: 1;
+    min-width: 140px;
+}
+
+.submit-btn:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
+.submit-btn:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
 .clear-btn {
     background: #dc3545;
     color: white;
@@ -162,6 +195,8 @@ header p {
     cursor: pointer;
     font-size: 1rem;
     transition: all 0.2s ease;
+    flex: 1;
+    min-width: 140px;
 }
 
 .clear-btn:hover {

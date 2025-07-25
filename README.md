@@ -27,6 +27,7 @@ Open `script.js` and replace the placeholder values:
 ```javascript
 const SUPABASE_URL = 'YOUR_SUPABASE_URL';        // Replace with your Project URL
 const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // Replace with your anon key
+const WEBHOOK_URL = 'YOUR_N8N_WEBHOOK_URL';      // Replace with your n8n webhook URL
 ```
 
 ### 3. Database Schema
@@ -46,6 +47,22 @@ const { data, error } = await supabase
     .limit(10)
     .order('your_column_name');
 ```
+
+### 3. Configure n8n Webhook (Optional)
+
+If you want to receive the selected data in n8n:
+
+1. Create a new workflow in n8n
+2. Add a **Webhook** node as the trigger
+3. Copy the webhook URL from the node
+4. Update `WEBHOOK_URL` in `script.js` with your n8n webhook URL
+
+The webhook will receive a JSON payload with:
+- `sub_community`: The selected sub community name
+- `selected_at`: ISO timestamp of selection
+- `user_agent`: Browser information
+- `timestamp`: Unix timestamp
+- `full_data`: Complete data object from Supabase
 
 ### 4. Run the Application
 

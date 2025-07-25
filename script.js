@@ -2,6 +2,9 @@
 const SUPABASE_URL = 'https://hwfrwtuqpjbkuywgcvwn.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh3ZnJ3dHVxcGpia3V5d2djdnduIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTIzMTUzMzksImV4cCI6MjA2Nzg5MTMzOX0.NAUC8B3PHZ9aVDNvAkzwU5gcL4zYMZEpqqKvijTpmnY';
 
+// Webhook configuration
+const WEBHOOK_URL = 'https://thomasmccone.app.n8n.cloud/webhook/89da7908-14a3-4d70-a7a2-35754bf745f8';
+
 // Initialize Supabase client
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -12,6 +15,7 @@ const resultsList = document.getElementById('resultsList');
 const selectedResult = document.getElementById('selectedResult');
 const selectedContent = document.getElementById('selectedContent');
 const clearSelectionBtn = document.getElementById('clearSelection');
+const submitSelectionBtn = document.getElementById('submitSelection');
 
 // State
 let searchTimeout;
@@ -23,6 +27,7 @@ searchInput.addEventListener('input', handleSearch);
 searchInput.addEventListener('focus', handleFocus);
 searchInput.addEventListener('blur', handleBlur);
 clearSelectionBtn.addEventListener('click', clearSelection);
+submitSelectionBtn.addEventListener('click', submitSelection);
 
 // Handle search input
 function handleSearch(event) {
@@ -148,6 +153,64 @@ function clearSelection() {
     selectedResult.classList.add('hidden');
     selectedContent.textContent = '';
     searchInput.focus();
+}
+
+// Submit selection to webhook
+async function submitSelection() {
+    if (!selectedItem) {
+        alert('Please select a sub community first');
+        return;
+    }
+    
+    if (WEBHOOK_URL === 'YOUR_N8N_WEBHOOK_URL') {
+        alert('Please configure your n8n webhook URL in script.js');
+        return;
+    }
+    
+    try {
+        // Disable submit button and show loading state
+        submitSelectionBtn.disabled = true;
+        submitSelectionBtn.textContent = 'Submitting...';
+        
+        // Prepare the data to send
+        const payload = {
+            sub_community: selectedItem.sub_community,
+            selected_at: new Date().toISOString(),
+            user_agent: navigator.userAgent,
+            timestamp: Date.now(),
+            // Include all data from the selected item
+            full_data: selectedItem
+        };
+        
+        console.log('Sending payload to webhook:', payload);
+        
+        // Send to n8n webhook
+        const response = await fetch(WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        });
+        
+        if (response.ok) {
+            console.log('Successfully sent to webhook');
+            alert('Selection submitted successfully!');
+            
+            // Clear the selection after successful submission
+            clearSelection();
+        } else {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+    } catch (error) {
+        console.error('Error submitting to webhook:', error);
+        alert(`Error submitting selection: ${error.message}`);
+    } finally {
+        // Re-enable submit button
+        submitSelectionBtn.disabled = false;
+        submitSelectionBtn.textContent = 'Submit Selection';
+    }
 }
 
 // Show/hide results
