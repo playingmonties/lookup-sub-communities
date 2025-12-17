@@ -6,7 +6,9 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const WEBHOOK_URL = 'https://thomasmccone.app.n8n.cloud/webhook/89da7908-14a3-4d70-a7a2-35754bf745f8';
 
 // Initialize Supabase client
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Use a different variable name to avoid clashing with any global `supabase` that
+// might be defined by extensions or other scripts.
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // DOM elements
 const searchInput = document.getElementById('searchInput');
@@ -59,7 +61,7 @@ async function performSearch(query) {
         console.log('Searching for:', query);
         
         // Search for sub communities that match the query
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('sub_communities')
             .select('*')
             .ilike('sub_community', `%${query}%`)
@@ -287,7 +289,7 @@ document.addEventListener('keydown', (e) => {
 async function testConnection() {
     try {
         console.log('Testing Supabase connection...');
-        const { data, error } = await supabase
+        const { data, error } = await supabaseClient
             .from('sub_communities')
             .select('count')
             .limit(1);
